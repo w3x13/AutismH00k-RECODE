@@ -540,7 +540,7 @@ void CVisualTab::Setup()
 #pragma endregion Setting up the Options controls
 	ChamsGroup.SetText("Options 2");
 	ChamsGroup.SetPosition(225, 30);
-	ChamsGroup.SetSize(200, 225);
+	ChamsGroup.SetSize(200, 300);
 	RegisterControl(&ChamsGroup);
 
 	BuyBot.SetFileId("buy");
@@ -578,7 +578,6 @@ void CVisualTab::Setup()
 	ChamsGroup.PlaceLabledControl(0, "Event Log", this, &logs);
 	DisablePostProcess.SetFileId("DisablePostProces");
 	ChamsGroup.PlaceLabledControl(0, "Disable Post Processing", this, &DisablePostProcess);
-	//ChamsGroup.PlaceLabledControl(0, "Preserve Killfeed", this, &Killfeed);
 	GrenadePrediction.SetFileId("GrenadePrediction");
 	ChamsGroup.PlaceLabledControl(0, "Grenade Prediction", this, &GrenadePrediction);
 

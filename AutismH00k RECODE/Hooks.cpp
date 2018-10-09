@@ -1456,8 +1456,6 @@ void ConColorMsg(Color const &color, const char* buf, ...)
 	auto ConCol = reinterpret_cast<ConColFn>((GetProcAddress(GetModuleHandle("tier0.dll"), "?ConColorMsg@@YAXABVColor@@PBDZZ")));
 	ConCol(color, buf);
 }
-
-
 bool __fastcall Hooked_FireEventClientSide(PVOID ECX, PVOID EDX, IGameEvent *Event)
 {
 	CBulletListener::singleton()->OnStudioRender();
@@ -1506,98 +1504,96 @@ bool __fastcall Hooked_FireEventClientSide(PVOID ECX, PVOID EDX, IGameEvent *Eve
 			warmup = true;
 		}
 
-	if (strcmp(Event->GetName(), "round_start"))
+		if (event_name.find("round_start") != std::string::npos)
 		{
-			if (event_name.find("round_start") != std::string::npos)
-			{
-				Interfaces::Engine->ExecuteClientCmd("clear");
-				Interfaces::CVar->ConsoleColorPrintf(Color(50, 255, 50, 255), ("[AutismH00k RECODE] TEST "));
-				switch (Options::Menu.VisualsTab.BuyBot.GetIndex())
-				{
-				case 0:
-				{
-					break;
-				}
-				case 1:
-				{
-					Interfaces::Engine->ClientCmd("buy scar20; buy g3sg1; buy revolver; buy vest; buy vesthelm; buy taser 34; buy defuser; buy incgrenade; buy molotov; buy hegrenade; buy smokegrenade;");
-					break;
-				}
-				case 2:
-				{
-					Interfaces::Engine->ClientCmd("buy scar20; buy g3sg1; buy elite; buy vest; buy vesthelm; buy taser 34; buy defuser; buy incgrenade; buy molotov; buy hegrenade; buy smokegrenade;");
-					break;
-				}
-				case 3:
-				{
-					Interfaces::Engine->ClientCmd("buy ssg08; buy revolver; buy vesthelm; buy defuser; buy molotov; buy incgrenade; buy hegrenade; buy smokegrenade; buy; taser 34");
-					break;
-				}
-				case 4:
-				{
-					Interfaces::Engine->ClientCmd("buy ssg08; buy elite; buy vesthelm; buy defuser; buy molotov; buy incgrenade; buy hegrenade; buy smokegrenade; buy; taser 34");
-					break;
-				}
-				}
-			}
-		}
-
-		if (!strcmp(Event->GetName(), "player_hurt"))
-		{
-			if (!localplayer->IsAlive()) {
-				Interfaces::Engine->ClientCmd_Unrestricted("firstperson");
-				Interfaces::pInput->m_fCameraInThirdPerson = false;
-				*(float*)((DWORD)Interfaces::pInput + 0xA8 + 0x8) = 0;
-			}
 			Interfaces::Engine->ExecuteClientCmd("clear");
-			int attackerid = Event->GetInt("attacker");
-			int entityid = Interfaces::Engine->GetPlayerForUserID(attackerid);
-			if (entityid == Interfaces::Engine->GetLocalPlayer())
+			Interfaces::CVar->ConsoleColorPrintf(Color(50, 255, 50, 255), ("[AutismH00k RECODE] TEST "));
+			switch (Options::Menu.VisualsTab.BuyBot.GetIndex())
 			{
-				Interfaces::Engine->ClientCmd_Unrestricted("play buttons\\arena_switch_press_02.wav");
-				int nUserID = Event->GetInt("attacker");
-				int nDead = Event->GetInt("userid");
-				int gaylol = Event->GetInt("hitgroup");
-				if (nUserID || nDead)
-				{
-					player_info_t killed_info = GetInfo(Interfaces::Engine->GetPlayerForUserID(nDead));
-					player_info_t killer_info = GetInfo(Interfaces::Engine->GetPlayerForUserID(nUserID));
-					IClientEntity* hurt = (IClientEntity*)Interfaces::EntList->GetClientEntity(Interfaces::Engine->GetPlayerForUserID(Event->GetInt("userid")));
-					if (Options::Menu.ColorsTab.DebugLagComp.GetState())
-						draw_hitboxes(hurt, 220, 220, 220, 255, 0.9, 0);
-					auto remaining_health = Event->GetString("health");
-					int remainaing = Event->GetInt("health");
-					auto dmg_to_health = Event->GetString("dmg_health");
-					std::string szHitgroup = HitgroupToString(gaylol);
-					Interfaces::CVar->ConsoleColorPrintf(Color(255, 255, 255, 255), "");
-					std::string One = "Hit ";
-					std::string Two = killed_info.name;
-					std::string Three = " in the ";
-					std::string Four = szHitgroup;
-					std::string gey = " for ";
-					std::string yes = dmg_to_health;
-					std::string yyes = " damage ";
-					std::string yyyes = remaining_health;
-					std::string yyyyes = " health remaining";
-					std::string newline = ".     \n";//no,i'm not retarded, i tried with stringstream but it didn't work.
-					std::string uremam = One + Two + Three + Four + gey + yes + yyes + yyyes + yyyyes + newline;
-
-					if (Options::Menu.VisualsTab.logs.GetState() && remainaing > 1 && gaylol != 1)
-					{
-						Msg(uremam.c_str());
-					}
-					else if (remainaing == 0 && Options::Menu.VisualsTab.logs.GetState() && gaylol != 1) {
-						ConColorMsg(Color(250, 250, 250), uremam.c_str());
-					}
-					if (gaylol == 1 && Options::Menu.VisualsTab.logs.GetState()) {
-						ConColorMsg(Color(Options::Menu.ColorsTab.Menu.GetValue()), uremam.c_str());
-					}
-
-
-				}
+			case 0:
+			{
+				break;
+			}
+			case 1:
+			{
+				Interfaces::Engine->ClientCmd_Unrestricted("buy scar20; buy g3sg1; buy revolver; buy vest; buy vesthelm; buy taser 34; buy defuser; buy incgrenade; buy molotov; buy hegrenade; buy smokegrenade;");
+				break;
+			}
+			case 2:
+			{
+				Interfaces::Engine->ClientCmd_Unrestricted("buy scar20; buy g3sg1; buy elite; buy vest; buy vesthelm; buy taser 34; buy defuser; buy incgrenade; buy molotov; buy hegrenade; buy smokegrenade;");
+				break;
+			}
+			case 3:
+			{
+				Interfaces::Engine->ClientCmd_Unrestricted("buy ssg08; buy revolver; buy vesthelm; buy defuser; buy molotov; buy incgrenade; buy hegrenade; buy smokegrenade; buy; taser 34");
+				break;
+			}
+			case 4:
+			{
+				Interfaces::Engine->ClientCmd_Unrestricted("buy ssg08; buy elite; buy vesthelm; buy defuser; buy molotov; buy incgrenade; buy hegrenade; buy smokegrenade; buy; taser 34");
+				break;
+			}
 			}
 		}
+	}
 
+	if (!strcmp(Event->GetName(), "player_hurt"))
+	{
+		if (!localplayer->IsAlive()) {
+			Interfaces::Engine->ClientCmd_Unrestricted("firstperson");
+			Interfaces::pInput->m_fCameraInThirdPerson = false;
+			*(float*)((DWORD)Interfaces::pInput + 0xA8 + 0x8) = 0;
+		}
+		Interfaces::Engine->ExecuteClientCmd("clear");
+		int attackerid = Event->GetInt("attacker");
+		int entityid = Interfaces::Engine->GetPlayerForUserID(attackerid);
+		if (entityid == Interfaces::Engine->GetLocalPlayer())
+		{
+
+			Interfaces::Engine->ClientCmd_Unrestricted("play buttons\\arena_switch_press_02.wav");
+			int nUserID = Event->GetInt("attacker");
+			int nDead = Event->GetInt("userid");
+			int gaylol = Event->GetInt("hitgroup");
+			if (nUserID || nDead)
+			{
+				player_info_t killed_info = GetInfo(Interfaces::Engine->GetPlayerForUserID(nDead));
+				player_info_t killer_info = GetInfo(Interfaces::Engine->GetPlayerForUserID(nUserID));
+				IClientEntity* hurt = (IClientEntity*)Interfaces::EntList->GetClientEntity(Interfaces::Engine->GetPlayerForUserID(Event->GetInt("userid")));
+				if (Options::Menu.ColorsTab.DebugLagComp.GetState())
+					draw_hitboxes(hurt, 220, 220, 220, 255, 0.9, 0);
+				auto remaining_health = Event->GetString("health");
+				int remainaing = Event->GetInt("health");
+				auto dmg_to_health = Event->GetString("dmg_health");
+				std::string szHitgroup = HitgroupToString(gaylol);
+				Interfaces::CVar->ConsoleColorPrintf(Color(255, 255, 255, 255), "");
+				std::string One = "Hit ";
+				std::string Two = killed_info.name;
+				std::string Three = " in the ";
+				std::string Four = szHitgroup;
+				std::string gey = " for ";
+				std::string yes = dmg_to_health;
+				std::string yyes = " damage ";
+				std::string yyyes = remaining_health;
+				std::string yyyyes = " health remaining";
+				std::string newline = ".     \n";//no,i'm not retarded, i tried with stringstream but it didn't work.
+				std::string uremam = One + Two + Three + Four + gey + yes + yyes + yyyes + yyyyes + newline;
+
+				if (Options::Menu.VisualsTab.logs.GetState() && remainaing > 1 && gaylol != 1)
+				{
+					Msg(uremam.c_str());
+				}
+				else if (remainaing == 0 && Options::Menu.VisualsTab.logs.GetState() && gaylol != 1) {
+					ConColorMsg(Color(250, 250, 250), uremam.c_str());
+				}
+				if (gaylol == 1 && Options::Menu.VisualsTab.logs.GetState()) {
+					ConColorMsg(Color(Options::Menu.ColorsTab.Menu.GetValue()), uremam.c_str());
+				}
+
+
+			}
+		}
+	
 
 
 		if (!strcmp(Event->GetName(), "item_purchase"))

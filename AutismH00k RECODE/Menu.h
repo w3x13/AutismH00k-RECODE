@@ -187,7 +187,7 @@ public:
 	CLabel ActiveLabel;
 	CCheckBox Active;
 	CCheckBox logs;
-	CComboBox Killfeed;
+	CCheckBox Killfeed;
 	CComboBox BuyBot;
 	CSlider flashAlpha;
 	CGroupBox OptionsGroup;
