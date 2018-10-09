@@ -1506,7 +1506,7 @@ bool __fastcall Hooked_FireEventClientSide(PVOID ECX, PVOID EDX, IGameEvent *Eve
 			warmup = true;
 		}
 
-		if (strcmp(Event->GetName(), "round_start"))
+	if (strcmp(Event->GetName(), "round_start"))
 		{
 			if (event_name.find("round_start") != std::string::npos)
 			{

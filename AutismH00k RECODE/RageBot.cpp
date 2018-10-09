@@ -2955,8 +2955,6 @@ void CRageBot::DoAntiAim(CUserCmd *pCmd, bool &bSendPacket)
 
 	if (GameUtils::IsBomb(pWeapon))
 		return;
-	if (DT_NOCLIP)
-		return;
 
 	if (IsAimStepping)
 		return;
