@@ -27,8 +27,21 @@ public:
 	int userid;
 };
 
+
+
 extern std::vector<trace_info> trace_logs;
 #define g_pGameEventManager Interfaces::EventManager
+class : IGameEventListener2
+{
+public:
+	void start()
+	{
+		g_pGameEventManager->AddListener(this, "round_start", false);
+		g_pGameEventManager->AddListener(this, "play_death", false);
+
+	}
+	
+};
 class CBulletListener
 {
 	class BulletListener : IGameEventListener2

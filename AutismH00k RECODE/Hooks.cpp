@@ -110,6 +110,7 @@ RenderViewFn oRenderView;
 void __fastcall PaintTraverse_Hooked(PVOID pPanels, int edx, unsigned int vguiPanel, bool forceRepaint, bool allowForce);
 bool __stdcall Hooked_InPrediction();
 bool __fastcall Hooked_FireEventClientSide(PVOID ECX, PVOID EDX, IGameEvent *Event);
+bool __fastcall Hooked_round_start(PVOID ECX, PVOID EDX, IGameEvent *Event);
 void __fastcall Hooked_DrawModelExecute(void* thisptr, int edx, void* ctx, void* state, const ModelRenderInfo_t &pInfo, matrix3x4 *pCustomBoneToWorld);
 bool __stdcall CreateMoveClient_Hooked(float frametime, CUserCmd* pCmd);
 HRESULT __stdcall EndScene_hooked(IDirect3DDevice9 *pDevice);
@@ -1406,24 +1407,24 @@ void draw_hitboxes(IClientEntity* pEntity, int r, int g, int b, int a, float dur
 		mstudiobbox_t* hitbox = set->GetHitbox(i);
 		if (!hitbox)
 			continue;
-		Vector vMin, vMax;
-		auto VectorTransform_Wrapperx = [](const Vector& in1, const matrix3x4 &in2, Vector &out)
+Vector vMin, vMax;
+auto VectorTransform_Wrapperx = [](const Vector& in1, const matrix3x4 &in2, Vector &out)
+{
+	auto VectorTransform = [](const float *in1, const matrix3x4& in2, float *out)
+	{
+		auto DotProducts = [](const float *v1, const float *v2)
 		{
-			auto VectorTransform = [](const float *in1, const matrix3x4& in2, float *out)
-			{
-				auto DotProducts = [](const float *v1, const float *v2)
-				{
-					return v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2];
-				};
-				out[0] = DotProducts(in1, in2[0]) + in2[0][3];
-				out[1] = DotProducts(in1, in2[1]) + in2[1][3];
-				out[2] = DotProducts(in1, in2[2]) + in2[2][3];
-			};
-			VectorTransform(&in1.x, in2, &out.x);
+			return v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2];
 		};
-		VectorTransform_Wrapperx(hitbox->bbmin, matrix[hitbox->bone], vMin);
-		VectorTransform_Wrapperx(hitbox->bbmax, matrix[hitbox->bone], vMax);
-		Interfaces::DebugOverlay->DrawPill(vMin, vMax, hitbox->m_flRadius, r, g, b, a, duration);
+		out[0] = DotProducts(in1, in2[0]) + in2[0][3];
+		out[1] = DotProducts(in1, in2[1]) + in2[1][3];
+		out[2] = DotProducts(in1, in2[2]) + in2[2][3];
+	};
+	VectorTransform(&in1.x, in2, &out.x);
+};
+VectorTransform_Wrapperx(hitbox->bbmin, matrix[hitbox->bone], vMin);
+VectorTransform_Wrapperx(hitbox->bbmax, matrix[hitbox->bone], vMax);
+Interfaces::DebugOverlay->DrawPill(vMin, vMax, hitbox->m_flRadius, r, g, b, a, duration);
 	}
 }
 
@@ -1457,7 +1458,6 @@ void ConColorMsg(Color const &color, const char* buf, ...)
 }
 
 
-
 bool __fastcall Hooked_FireEventClientSide(PVOID ECX, PVOID EDX, IGameEvent *Event)
 {
 	CBulletListener::singleton()->OnStudioRender();
@@ -1488,38 +1488,6 @@ bool __fastcall Hooked_FireEventClientSide(PVOID ECX, PVOID EDX, IGameEvent *Eve
 						}
 					}
 				}
-				if (event_name.find("round_start") != std::string::npos)
-				{
-					Interfaces::Engine->ExecuteClientCmd("clear");
-					Interfaces::CVar->ConsoleColorPrintf(Color(50, 255, 50, 255), ("[AutismH00k RECODE] TEST "));
-					switch (Options::Menu.VisualsTab.BuyBot.GetIndex())
-					{
-					case 0:
-					{
-						break;
-					}
-					case 1:
-					{
-						Interfaces::Engine->ClientCmd_Unrestricted("buy scar20; buy g3sg1; buy revolver; buy vest; buy vesthelm; buy taser 34; buy defuser; buy incgrenade; buy molotov; buy hegrenade; buy smokegrenade;");
-						break;
-					}
-					case 2:
-					{
-						Interfaces::Engine->ClientCmd_Unrestricted("buy scar20; buy g3sg1; buy elite; buy vest; buy vesthelm; buy taser 34; buy defuser; buy incgrenade; buy molotov; buy hegrenade; buy smokegrenade;");
-						break;
-					}
-					case 3:
-					{
-						Interfaces::Engine->ClientCmd_Unrestricted("buy ssg08; buy deagle; buy vesthelm; buy defuser; buy molotov; buy incgrenade; buy hegrenade; buy smokegrenade; buy; taser");
-						break;
-					}
-					case 4:
-					{
-						Interfaces::Engine->ClientCmd_Unrestricted("buy ssg08; buy elite; buy vesthelm; buy defuser; buy molotov; buy incgrenade; buy hegrenade; buy smokegrenade; buy; taser");
-						break;
-					}
-					}
-				}
 				warmup = false;
 			}
 			else
@@ -1538,7 +1506,41 @@ bool __fastcall Hooked_FireEventClientSide(PVOID ECX, PVOID EDX, IGameEvent *Eve
 			warmup = true;
 		}
 
-		
+		if (strcmp(Event->GetName(), "round_start"))
+		{
+			if (event_name.find("round_start") != std::string::npos)
+			{
+				Interfaces::Engine->ExecuteClientCmd("clear");
+				Interfaces::CVar->ConsoleColorPrintf(Color(50, 255, 50, 255), ("[AutismH00k RECODE] TEST "));
+				switch (Options::Menu.VisualsTab.BuyBot.GetIndex())
+				{
+				case 0:
+				{
+					break;
+				}
+				case 1:
+				{
+					Interfaces::Engine->ClientCmd("buy scar20; buy g3sg1; buy revolver; buy vest; buy vesthelm; buy taser 34; buy defuser; buy incgrenade; buy molotov; buy hegrenade; buy smokegrenade;");
+					break;
+				}
+				case 2:
+				{
+					Interfaces::Engine->ClientCmd("buy scar20; buy g3sg1; buy elite; buy vest; buy vesthelm; buy taser 34; buy defuser; buy incgrenade; buy molotov; buy hegrenade; buy smokegrenade;");
+					break;
+				}
+				case 3:
+				{
+					Interfaces::Engine->ClientCmd("buy ssg08; buy revolver; buy vesthelm; buy defuser; buy molotov; buy incgrenade; buy hegrenade; buy smokegrenade; buy; taser 34");
+					break;
+				}
+				case 4:
+				{
+					Interfaces::Engine->ClientCmd("buy ssg08; buy elite; buy vesthelm; buy defuser; buy molotov; buy incgrenade; buy hegrenade; buy smokegrenade; buy; taser 34");
+					break;
+				}
+				}
+			}
+		}
 
 		if (!strcmp(Event->GetName(), "player_hurt"))
 		{

@@ -613,7 +613,7 @@ void CVisualTab::Setup()
 	flashAlpha.SetValue(10);
 	OtherGroup.PlaceLabledControl(0, "Flash Alpha", this, &flashAlpha);
 	OtherNoSmoke.SetFileId("otr_nosmoke");
-	OtherGroup.PlaceLabledControl(0, "Wireframe Smoke", this, &OtherNoSmoke);
+	OtherGroup.PlaceLabledControl(0, "Wireframe smoke", this, &OtherNoSmoke);
 	OtherNoScope.SetFileId("otr_noscope");
 	OtherGroup.PlaceLabledControl(0, "Remove scope", this, &OtherNoScope);
 	RemoveZoom.SetFileId("otr_remv_zoom");

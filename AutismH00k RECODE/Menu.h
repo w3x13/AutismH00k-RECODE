@@ -292,6 +292,7 @@ public:
 	CCheckBox OtherNoSky;
 	CCheckBox OtherNoFlash;
 	CCheckBox OtherNoSmoke;
+	CCheckBox Wireframesmoke;
 	CCheckBox OtherAsusWalls;
 	CCheckBox FovArrows;
 	CComboBoxYeti OtherNoHands;
