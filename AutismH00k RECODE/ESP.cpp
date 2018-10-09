@@ -127,11 +127,11 @@ void CEsp::Draw()
 				draw_arrow(real_rot, real_color);
 
 
-			static const auto lby_color = Color(250, 250, 250, 255);
+			/*static const auto lby_color = Color(250, 250, 250, 255);
 
 				const auto lby_rot = DEG2RAD(client_viewangles.y - lineLBY - 90);
 
-				draw_arrow(lby_rot, lby_color);
+				draw_arrow(lby_rot, lby_color);*/
 			}
 			if (Options::Menu.VisualsTab.GrenadePrediction.GetState())
 			{

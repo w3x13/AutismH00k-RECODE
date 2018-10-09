@@ -1835,6 +1835,7 @@ void __fastcall  hkSceneEnd(void *pEcx, void *pEdx) {
 				}
 			}
 		}
+		IClientEntity *pLocal = hackManager.pLocal();
 		if (Options::Menu.VisualsTab.aa_helper.GetState())
 		{
 			if (warmup) return;
@@ -1843,16 +1844,34 @@ void __fastcall  hkSceneEnd(void *pEcx, void *pEdx) {
 			{
 
 				Vector OrigAng;
-				OrigAng = pLocalPlayer->GetEyeAngles();
-				pLocalPlayer->SetAngle2(Vector(0, hackManager.pLocal()->GetEyeAnglesXY()->y, 0));
+				OrigAng = pLocal->GetEyeAngles();
+				pLocal->SetAngle2(Vector(0, fakeangle, 0));
 				float	NormalColor[3] = { 0.75, 0.75 , 0.75 };
 				bool LbyColor = false;
 				float lbyUpdateColor[3] = { 0, 1, 0 };
 				Interfaces::RenderView->SetColorModulation(LbyColor ? lbyUpdateColor : NormalColor);
 				Interfaces::ModelRender->ForcedMaterialOverride(CoveredLit);
-				pLocalPlayer->draw_model(STUDIO_RENDER, 255);
+				pLocal->draw_model(STUDIO_RENDER, 255);
 				Interfaces::ModelRender->ForcedMaterialOverride(nullptr);
-
+				pLocal->SetAngle2(OrigAng);
+				if (pLocal)
+				{
+					IMaterial  *CoveredLit = CreateMaterial(false, true, false);
+					if (CoveredLit)
+					{
+						Vector OrigAng;
+						OrigAng = pLocal->GetEyeAngles();
+						pLocal->SetAngle2(Vector(0, lineLBY, 0));
+						bool LbyColor = false;
+						float NormalColor[3] = { 0.6, 1, 0 };
+						float lbyUpdateColor[3] = { 0, 1, 0 };
+						Interfaces::RenderView->SetColorModulation(LbyColor ? lbyUpdateColor : NormalColor);
+						Interfaces::ModelRender->ForcedMaterialOverride(CoveredLit);
+						pLocal->draw_model(STUDIO_RENDER, 255);
+						Interfaces::ModelRender->ForcedMaterialOverride(nullptr);
+						pLocal->SetAngle2(OrigAng);
+					}
+				}
 			}
 
 		}
