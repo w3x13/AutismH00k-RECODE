@@ -2952,7 +2952,8 @@ void CRageBot::DoAntiAim(CUserCmd *pCmd, bool &bSendPacket)
 		return;
 	if ((pCmd->buttons & IN_USE) || pLocal->GetMoveType() == MOVETYPE_LADDER)
 		return;
-
+	if (pLocal->GetMoveType() == MOVETYPE_NOCLIP)
+		return;
 	if (GameUtils::IsBomb(pWeapon))
 		return;
 
