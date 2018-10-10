@@ -287,7 +287,7 @@ int __stdcall Hooked_DoPostScreenEffects(int a1)
 					glow_object->m_flGlowAlpha = Options::Menu.VisualsTab.Glowz_lcl.GetValue() / 100;
 					glow_object->m_bRenderWhenOccluded = true;
 					glow_object->m_bRenderWhenUnoccluded = false;
-					if (Options::Menu.VisualsTab.PulsatingChams.GetState()){
+					if (Options::Menu.VisualsTab.PulsatingChams.GetState()) {
 						glow_object->m_bPulsatingChams = 1;
 					}
 				}
@@ -685,7 +685,7 @@ float random_float(float min, float max)
 LinearExtrapolations linear_extraps;
 bool __stdcall CreateMoveClient_Hooked(float frametime, CUserCmd* pCmd)
 {
-	
+
 	if (!pCmd->command_number)
 		return true;
 	IClientEntity *pLocal = Interfaces::EntList->GetClientEntity(Interfaces::Engine->GetLocalPlayer());
@@ -813,17 +813,17 @@ bool __stdcall CreateMoveClient_Hooked(float frametime, CUserCmd* pCmd)
 						if (Options::Menu.ColorsTab.customskies.GetIndex() == 5)
 						{
 							ConVar* NightSkybox1 = Interfaces::CVar->FindVar("sv_skyname");
-						*(float*)((DWORD)&NightSkybox1->fnChangeCallback + 0xC) = NULL;
-						NightSkybox1->SetValue("jungle");
-						if (!strcmp(pMaterial->GetTextureGroupName(), "World textures"))  // walls	
-						{
-							pMaterial->ColorModulation(amountr, amountr, amountr);
-						}
-						if (!strcmp(pMaterial->GetTextureGroupName(), "StaticProp textures"))
-						{
-							pMaterial->AlphaModulate(test);
-							pMaterial->ColorModulation(amountr, amountr, amountr);
-						}
+							*(float*)((DWORD)&NightSkybox1->fnChangeCallback + 0xC) = NULL;
+							NightSkybox1->SetValue("jungle");
+							if (!strcmp(pMaterial->GetTextureGroupName(), "World textures"))  // walls	
+							{
+								pMaterial->ColorModulation(amountr, amountr, amountr);
+							}
+							if (!strcmp(pMaterial->GetTextureGroupName(), "StaticProp textures"))
+							{
+								pMaterial->AlphaModulate(test);
+								pMaterial->ColorModulation(amountr, amountr, amountr);
+							}
 						}
 						if (Options::Menu.ColorsTab.customskies.GetIndex() == 6)
 						{
@@ -1285,17 +1285,35 @@ void __fastcall PaintTraverse_Hooked(PVOID pPanels, int edx, unsigned int vguiPa
 					RECT TextSize = Render::GetTextSize(Render::Fonts::LBYIndicator, "LBY");
 					if (pCmd->viewangles.y - pLocal->GetLowerBodyYaw() >= -35 && pCmd->viewangles.y - pLocal->GetLowerBodyYaw() <= 35)
 					{
-						Render::Text(6, scrn.bottom - 75, Color(255, 0, 30, 255), Render::Fonts::LBY, "LBY");
+						Render::Text(6, scrn.bottom - 120, Color(255, 0, 30, 255), Render::Fonts::LBY, "LBY");
 					}
 					else
 					{
 						if (pCmd->viewangles.y - *pLocal->GetLowerBodyYawTarget() > 120)
 						{
-							Render::Text(6, scrn.bottom - 75, Color(255, 120, 30, 255), Render::Fonts::LBY, "LBY");
+							Render::Text(6, scrn.bottom - 120, Color(255, 120, 30, 255), Render::Fonts::LBY, "LBY");
 						}
 						else
 						{
-							Render::Text(6, scrn.bottom - 75, Color(0, 250, 60, 255), Render::Fonts::LBY, "LBY");
+							Render::Text(6, scrn.bottom - 120, Color(0, 250, 60, 255), Render::Fonts::LBY, "LBY");
+						}
+						char angle[50];
+						sprintf_s(angle, sizeof(angle), "%i", *pLocal->GetLowerBodyYawTarget());
+						RECT TextSize = Render::GetTextSize(Render::Fonts::LBYIndicator, "LC");
+						if (pCmd->viewangles.y - pLocal->GetLowerBodyYaw() >= -35 && pCmd->viewangles.y - pLocal->GetLowerBodyYaw() <= 35)
+						{
+							Render::Text(6, scrn.bottom - 100, Color(255, 0, 30, 255), Render::Fonts::LBY, "LC");
+						}
+						else
+						{
+							if (pCmd->viewangles.y - *pLocal->GetLowerBodyYawTarget() > 120)
+							{
+								Render::Text(6, scrn.bottom - 100, Color(255, 120, 30, 255), Render::Fonts::LBY, "LC");
+							}
+							else
+							{
+								Render::Text(6, scrn.bottom - 100, Color(0, 250, 60, 255), Render::Fonts::LBY, "LC");
+							}
 						}
 					}
 				}
@@ -1407,24 +1425,24 @@ void draw_hitboxes(IClientEntity* pEntity, int r, int g, int b, int a, float dur
 		mstudiobbox_t* hitbox = set->GetHitbox(i);
 		if (!hitbox)
 			continue;
-Vector vMin, vMax;
-auto VectorTransform_Wrapperx = [](const Vector& in1, const matrix3x4 &in2, Vector &out)
-{
-	auto VectorTransform = [](const float *in1, const matrix3x4& in2, float *out)
-	{
-		auto DotProducts = [](const float *v1, const float *v2)
+		Vector vMin, vMax;
+		auto VectorTransform_Wrapperx = [](const Vector& in1, const matrix3x4 &in2, Vector &out)
 		{
-			return v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2];
+			auto VectorTransform = [](const float *in1, const matrix3x4& in2, float *out)
+			{
+				auto DotProducts = [](const float *v1, const float *v2)
+				{
+					return v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2];
+				};
+				out[0] = DotProducts(in1, in2[0]) + in2[0][3];
+				out[1] = DotProducts(in1, in2[1]) + in2[1][3];
+				out[2] = DotProducts(in1, in2[2]) + in2[2][3];
+			};
+			VectorTransform(&in1.x, in2, &out.x);
 		};
-		out[0] = DotProducts(in1, in2[0]) + in2[0][3];
-		out[1] = DotProducts(in1, in2[1]) + in2[1][3];
-		out[2] = DotProducts(in1, in2[2]) + in2[2][3];
-	};
-	VectorTransform(&in1.x, in2, &out.x);
-};
-VectorTransform_Wrapperx(hitbox->bbmin, matrix[hitbox->bone], vMin);
-VectorTransform_Wrapperx(hitbox->bbmax, matrix[hitbox->bone], vMax);
-Interfaces::DebugOverlay->DrawPill(vMin, vMax, hitbox->m_flRadius, r, g, b, a, duration);
+		VectorTransform_Wrapperx(hitbox->bbmin, matrix[hitbox->bone], vMin);
+		VectorTransform_Wrapperx(hitbox->bbmax, matrix[hitbox->bone], vMax);
+		Interfaces::DebugOverlay->DrawPill(vMin, vMax, hitbox->m_flRadius, r, g, b, a, duration);
 	}
 }
 
@@ -1593,7 +1611,7 @@ bool __fastcall Hooked_FireEventClientSide(PVOID ECX, PVOID EDX, IGameEvent *Eve
 
 			}
 		}
-	
+
 
 
 		if (!strcmp(Event->GetName(), "item_purchase"))
