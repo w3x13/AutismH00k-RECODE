@@ -580,6 +580,8 @@ void CVisualTab::Setup()
 	ChamsGroup.PlaceLabledControl(0, "Disable Post Processing", this, &DisablePostProcess);
 	GrenadePrediction.SetFileId("GrenadePrediction");
 	ChamsGroup.PlaceLabledControl(0, "Grenade Prediction", this, &GrenadePrediction);
+	LBYIndicator.SetFileId("LBYIndicator");
+	ChamsGroup.PlaceLabledControl(0, "LBYIndicator", this, &LBYIndicator);
 
 
 #pragma region Other
