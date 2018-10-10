@@ -1,7 +1,0 @@
-﻿D:\visual studio\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(373,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
-D:\visual studio\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(387,5): warning MSB8028: The intermediate directory (Release\) contains files shared from another project (Cheat.vcxproj, Estrogenhook.vcxproj, faxroawr.vcxproj, faxSDK_.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  ESP.cpp
-  Menu.cpp
-     Creating library ..\Release\AutismH00k RECODE.lib and object ..\Release\AutismH00k RECODE.exp
-  Mirror.vcxproj -> C:\Users\Timi\Desktop\AUTISM H00K RECODE\AutismH00k RECODE\..\Release\AutismH00k RECODE.dll
-  Mirror.vcxproj -> ..\Release\AutismH00k RECODE.pdb (Full PDB)
