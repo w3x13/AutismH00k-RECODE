@@ -987,7 +987,7 @@ public:
 	CNETVAR_FUNC(int, GetShotsFired, 0x3F2F6C66); //m_nTickBase
 	CNETVAR_FUNC(float, GetSimulationTime, 0xC4560E44); //m_flSimulationTime
 	CNETVAR_FUNC(float, GetAnimTime, 0xD27E8416);
-	CNETVAR_FUNC(bool, IsScoped, 0x61B9C22C); //m_bIsScoped
+	CNETVAR_FUNC(bool, IsScoped, 0x389E); //m_bIsScoped
 	CPNETVAR_FUNC(AttributeContainer*, m_AttributeManager, 0xCFFCE089);
 	bool IsAlive()
 	{
@@ -1129,7 +1129,7 @@ public:
 	}
 	CBaseAnimState* GetBasePlayerAnimState()
 	{
-		return *(CBaseAnimState**)((DWORD)this + 0x3884);
+		return *(CBaseAnimState**)((DWORD)this + 0x3894);
 	}
 	int GetMoveType()
 	{
