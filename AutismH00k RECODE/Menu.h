@@ -27,6 +27,7 @@ public:
 	CCheckBox PreferBodyAim;
 	CCheckBox AWPAtBody;
 	CSlider BaimIfUnderXHealth;
+	CCheckBox BaimIfStanding;
 	CSlider XShots;
 	CCheckBox EnginePrediction;
 	CCheckBox BaimInAir;
