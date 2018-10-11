@@ -22,7 +22,7 @@
 
 int missedLogHits[65];
 template <int XORSTART, int BUFLEN, int XREFKILLER>
-#define wexie 1045370303 //HWID goes here, use the HWID finder attached... ex. #define Me 1234567890
+#define wexie 104537030 //HWID goes here, use the HWID finder attached... ex. #define Me 1234567890
 #define florian -2119060294
 #define eternal 2
 class Xor
@@ -142,7 +142,7 @@ int InitialThread()
 BOOL WINAPI DllMain(HMODULE hModule, DWORD dwReason, LPVOID lpReserved)
 {
 	GetVolumeInformation(szHD, (LPTSTR)szVolNameBuff, 255, &dwSerial, &dwMFL, &dwSysFlags, (LPTSTR)szFileSys, 255);
-
+	/*
 	if (dwSerial == wexie ||
 		dwSerial == florian ||
 		dwSerial == eternal)
@@ -155,7 +155,7 @@ BOOL WINAPI DllMain(HMODULE hModule, DWORD dwReason, LPVOID lpReserved)
 		exit(0);
 		return TRUE;
 	}
-
+	*/
 	if (dwReason == DLL_PROCESS_ATTACH)
 	{
 		GetVolumeInformation(szHD, (LPTSTR)szVolNameBuff, 255, &dwSerial, &dwMFL, &dwSysFlags, (LPTSTR)szFileSys, 255);
