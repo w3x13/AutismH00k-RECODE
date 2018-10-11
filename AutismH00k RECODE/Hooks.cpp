@@ -1203,6 +1203,7 @@ int BreakuLagCompensation()
 }
 void __fastcall PaintTraverse_Hooked(PVOID pPanels, int edx, unsigned int vguiPanel, bool forceRepaint, bool allowForce)
 {
+	IClientEntity* pLocal = (IClientEntity*)Interfaces::EntList->GetClientEntity(Interfaces::Engine->GetLocalPlayer());
 	if (Options::Menu.VisualsTab.Active.GetState() && Options::Menu.VisualsTab.OtherNoScope.GetState() && strcmp("HudZoom", Interfaces::Panels->GetName(vguiPanel)) == 0)
 		return;
 	int w, h;
@@ -1212,7 +1213,7 @@ void __fastcall PaintTraverse_Hooked(PVOID pPanels, int edx, unsigned int vguiPa
 	centerh = h / 2;
 	static unsigned int FocusOverlayPanel = 0;
 	static bool FoundPanel = false;
-	IClientEntity* pLocal = (IClientEntity*)Interfaces::EntList->GetClientEntity(Interfaces::Engine->GetLocalPlayer());
+	
 	if (!FoundPanel)
 	{
 		PCHAR szPanelName = (PCHAR)Interfaces::Panels->GetName(vguiPanel);
@@ -1279,40 +1280,37 @@ void __fastcall PaintTraverse_Hooked(PVOID pPanels, int edx, unsigned int vguiPa
 					else {
 						breaklagcomp = false;
 					}
-
-					char angle[50];
-					sprintf_s(angle, sizeof(angle), "%i", *pLocal->GetLowerBodyYawTarget());
-					RECT TextSize = Render::GetTextSize(Render::Fonts::LBYIndicator, "LBY");
-					if (pCmd->viewangles.y - pLocal->GetLowerBodyYaw() >= -35 && pCmd->viewangles.y - pLocal->GetLowerBodyYaw() <= 35)
-					{
-						Render::Text(6, scrn.bottom - 120, Color(255, 0, 30, 255), Render::Fonts::LBY, "LBY");
-					}
-					else
-					{
-						if (pCmd->viewangles.y - *pLocal->GetLowerBodyYawTarget() > 120)
-						{
-							Render::Text(6, scrn.bottom - 120, Color(255, 120, 30, 255), Render::Fonts::LBY, "LBY");
-						}
-						else
-						{
-							Render::Text(6, scrn.bottom - 120, Color(0, 250, 60, 255), Render::Fonts::LBY, "LBY");
-						}
+					if (Options::Menu.VisualsTab.LBYIndicator.GetState()) {
 						char angle[50];
 						sprintf_s(angle, sizeof(angle), "%i", *pLocal->GetLowerBodyYawTarget());
-						RECT TextSize = Render::GetTextSize(Render::Fonts::LBYIndicator, "LC");
+						RECT TextSize = Render::GetTextSize(Render::Fonts::LBYIndicator, "LBY");
 						if (pCmd->viewangles.y - pLocal->GetLowerBodyYaw() >= -35 && pCmd->viewangles.y - pLocal->GetLowerBodyYaw() <= 35)
 						{
-							Render::Text(6, scrn.bottom - 100, Color(255, 0, 30, 255), Render::Fonts::LBY, "LC");
+							Render::Text(6, scrn.bottom - 120, Color(255, 0, 30, 255), Render::Fonts::LBY, "LBY");
 						}
 						else
 						{
 							if (pCmd->viewangles.y - *pLocal->GetLowerBodyYawTarget() > 120)
 							{
-								Render::Text(6, scrn.bottom - 100, Color(255, 120, 30, 255), Render::Fonts::LBY, "LC");
+								Render::Text(6, scrn.bottom - 120, Color(255, 120, 30, 255), Render::Fonts::LBY, "LBY");
 							}
 							else
 							{
-								Render::Text(6, scrn.bottom - 100, Color(0, 250, 60, 255), Render::Fonts::LBY, "LC");
+								Render::Text(6, scrn.bottom - 120, Color(0, 250, 60, 255), Render::Fonts::LBY, "LBY");
+							}
+							if (Options::Menu.VisualsTab.LCIndicator.GetState()) {
+								char angle[50];
+								sprintf_s(angle, sizeof(angle), "%i", *pLocal->GetLowerBodyYawTarget());
+								RECT TextSize = Render::GetTextSize(Render::Fonts::LBYIndicator, "LC");
+								if (pCmd->viewangles.y - pLocal->GetLowerBodyYaw() >= -35 && pCmd->viewangles.y - pLocal->GetLowerBodyYaw() <= 35)
+								{
+									Render::Text(6, scrn.bottom - 100, Color(255, 0, 30, 255), Render::Fonts::LBY, "LC");
+								}
+									else
+									{
+										Render::Text(6, scrn.bottom - 100, Color(0, 250, 60, 255), Render::Fonts::LBY, "LC");
+									
+								}
 							}
 						}
 					}

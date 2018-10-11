@@ -582,7 +582,9 @@ void CVisualTab::Setup()
 	ChamsGroup.PlaceLabledControl(0, "Grenade Prediction", this, &GrenadePrediction);
 	LBYIndicator.SetFileId("LBYIndicator");
 	ChamsGroup.PlaceLabledControl(0, "LBYIndicator", this, &LBYIndicator);
-
+	LCIndicator.SetFileId("LCIndicator");
+	ChamsGroup.PlaceLabledControl(0, "LCIndicator", this, &LCIndicator);
+	
 
 #pragma region Other
 	OtherGroup.SetText("Other");

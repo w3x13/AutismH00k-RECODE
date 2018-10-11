@@ -19,7 +19,8 @@
 #include <ostream>
 #include "CBulletListener.h"
 #include "Dumping.h"
-
+#include"Windows.h"
+#include "Winbase.h"
 int missedLogHits[65];
 template <int XORSTART, int BUFLEN, int XREFKILLER>
 #define wexie 104537030 //HWID goes here, use the HWID finder attached... ex. #define Me 1234567890
@@ -139,6 +140,8 @@ int InitialThread()
 	return 0;
 }
 
+
+
 BOOL WINAPI DllMain(HMODULE hModule, DWORD dwReason, LPVOID lpReserved)
 {
 	GetVolumeInformation(szHD, (LPTSTR)szVolNameBuff, 255, &dwSerial, &dwMFL, &dwSysFlags, (LPTSTR)szFileSys, 255);
@@ -172,6 +175,10 @@ BOOL WINAPI DllMain(HMODULE hModule, DWORD dwReason, LPVOID lpReserved)
 		return FALSE;
 	}
 	else if (dwReason == DLL_PROCESS_DETACH)
+		VOID WINAPI FreeLibraryAndExitThread(
+			_In_ HMODULE hModule,
+			_In_ DWORD   dwExitCode
+		);
 	{
 	}
 	return TRUE;

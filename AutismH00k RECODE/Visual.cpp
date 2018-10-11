@@ -14,8 +14,6 @@ void CVisuals::Draw()
 	if (!Interfaces::Engine->IsConnected() || !Interfaces::Engine->IsInGame())
 		return;
 	IClientEntity* pLocal = (IClientEntity*)Interfaces::EntList->GetClientEntity(Interfaces::Engine->GetLocalPlayer());
-	if (Options::Menu.VisualsTab.OtherNoScope.GetState() && pLocal->IsAlive() && pLocal->IsScoped())
-		NoScopeCrosshair();
 	if (Options::Menu.VisualsTab.AutowallCrosshair.GetState())
 	{
 		AutowallCrosshair();
@@ -42,9 +40,9 @@ void CVisuals::NoScopeCrosshair()
 	scope->SetMaterialVarFlag(MATERIAL_VAR_NO_DRAW, true);
 	IClientEntity* pLocal = hackManager.pLocal();
 	C_BaseCombatWeapon* pWeapon = (C_BaseCombatWeapon*)Interfaces::EntList->GetClientEntityFromHandle(pLocal->GetActiveWeaponHandle());
-	if (GameUtils::IsSniper(pWeapon))
+	if (GameUtils::IsSniper(pWeapon) && GameUtils::IsScopedWeapon(pWeapon) && pWeapon->IsScoped())
 	{
-		Render::Line(MidX - 1000, MidY, MidX + 1000, MidY, Color(0, 0, 0, 255));
+		Render::Line(MidX - 1000, MidY, MidX + 1000, MidY, Color(255, 255, 255, 255));
 		Render::Line(MidX, MidY - 1000, MidX, MidY + 1000, Color(0, 0, 0, 255));
 	}
 }

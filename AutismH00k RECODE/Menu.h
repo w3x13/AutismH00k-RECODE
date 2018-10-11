@@ -212,6 +212,7 @@ public:
 	CCheckBox BlendIfScoped;
 	CSlider BlendValue;
 	CCheckBox NoGlowIfScoped;
+	CCheckBox LCIndicator;
 	CCheckBox NoChamsIfScoped;
 	CComboBoxYeti OptionsHealth;
 	CComboBoxYeti OptionsWeapon;
