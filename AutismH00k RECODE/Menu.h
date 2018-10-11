@@ -28,6 +28,8 @@ public:
 	CCheckBox AWPAtBody;
 	CSlider BaimIfUnderXHealth;
 	CCheckBox BaimIfStanding;
+	CCheckBox BaimIfFakeWalking;
+	CCheckBox AwpBaim;
 	CSlider XShots;
 	CCheckBox EnginePrediction;
 	CCheckBox BaimInAir;

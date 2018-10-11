@@ -1166,12 +1166,13 @@ int CRageBot::HitScan(IClientEntity* pEntity)
 		HitBoxesToScan.push_back((int)CSGOHitboxID::HITBOX_LEFT_FOREARM);
 		HitBoxesToScan.push_back((int)CSGOHitboxID::HITBOX_RIGHT_FOREARM);
 	}
-	else if (Options::Menu.RageBotTab.AWPAtBody.GetState() && GameUtils::AWP(pWeapon))
+	else if (Options::Menu.RageBotTab.AwpBaim.GetState() && GameUtils::AWP(pWeapon))
 	{
 
 		HitBoxesToScan.push_back((int)CSGOHitboxID::HITBOX_BELLY);
 		HitBoxesToScan.push_back((int)CSGOHitboxID::HITBOX_PELVIS);
 		HitBoxesToScan.push_back((int)CSGOHitboxID::HITBOX_UPPER_CHEST);
+		HitBoxesToScan.push_back((int)CSGOHitboxID::HITBOX_LOWER_CHEST);
 		HitBoxesToScan.push_back((int)CSGOHitboxID::HITBOX_LEFT_THIGH);
 		HitBoxesToScan.push_back((int)CSGOHitboxID::HITBOX_RIGHT_THIGH);
 	}
@@ -1224,17 +1225,22 @@ int CRageBot::HitScan(IClientEntity* pEntity)
 			else if (!pEntity->GetFlags() & FL_ONGROUND && Options::Menu.RageBotTab.BaimInAir.GetState()) { //memed from fucking elysium jesus christ, thanks BlueeMods
 				HitBoxesToScan.push_back((int)CSGOHitboxID::HITBOX_BELLY);
 				HitBoxesToScan.push_back((int)CSGOHitboxID::HITBOX_PELVIS);
-				HitBoxesToScan.push_back((int)CSGOHitboxID::HITBOX_THORAX);
 				HitBoxesToScan.push_back((int)CSGOHitboxID::HITBOX_UPPER_CHEST);
 				HitBoxesToScan.push_back((int)CSGOHitboxID::HITBOX_LOWER_CHEST);
 				HitBoxesToScan.push_back((int)CSGOHitboxID::HITBOX_LEFT_THIGH);
 				HitBoxesToScan.push_back((int)CSGOHitboxID::HITBOX_RIGHT_THIGH);
 			}
+			else if(pEntity->GetVelocity().Length2D() < 0.70 && Options::Menu.RageBotTab.BaimIfFakeWalking.GetState()) //memed from fucking elysium jesus christ, thanks BlueeMods
+			{
+				HitBoxesToScan.push_back((int)CSGOHitboxID::HITBOX_BELLY);
+				HitBoxesToScan.push_back((int)CSGOHitboxID::HITBOX_PELVIS);
+				HitBoxesToScan.push_back((int)CSGOHitboxID::HITBOX_UPPER_CHEST);
+				HitBoxesToScan.push_back((int)CSGOHitboxID::HITBOX_LOWER_CHEST);
+			}
 			else if (pEntity->GetVelocity().Length2D() < 0.10) //memed from fucking elysium jesus christ, thanks BlueeMods
 			{
 				HitBoxesToScan.push_back((int)CSGOHitboxID::HITBOX_BELLY);
 				HitBoxesToScan.push_back((int)CSGOHitboxID::HITBOX_PELVIS);
-				HitBoxesToScan.push_back((int)CSGOHitboxID::HITBOX_THORAX);
 				HitBoxesToScan.push_back((int)CSGOHitboxID::HITBOX_UPPER_CHEST);
 				HitBoxesToScan.push_back((int)CSGOHitboxID::HITBOX_LOWER_CHEST);
 				HitBoxesToScan.push_back((int)CSGOHitboxID::HITBOX_LEFT_THIGH);
@@ -1244,7 +1250,6 @@ int CRageBot::HitScan(IClientEntity* pEntity)
 			{
 				HitBoxesToScan.push_back((int)CSGOHitboxID::HITBOX_BELLY);
 				HitBoxesToScan.push_back((int)CSGOHitboxID::HITBOX_PELVIS);
-				HitBoxesToScan.push_back((int)CSGOHitboxID::HITBOX_THORAX);
 				HitBoxesToScan.push_back((int)CSGOHitboxID::HITBOX_UPPER_CHEST);
 				HitBoxesToScan.push_back((int)CSGOHitboxID::HITBOX_LOWER_CHEST);
 				HitBoxesToScan.push_back((int)CSGOHitboxID::HITBOX_LEFT_THIGH);

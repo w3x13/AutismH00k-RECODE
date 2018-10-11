@@ -6,7 +6,7 @@
 #include <fstream>
 #include "XorStr.hpp"
 #define WINDOW_WIDTH 690
-#define WINDOW_HEIGHT 507
+#define WINDOW_HEIGHT 560
 PhantomWindow Options::Menu;
 struct Config_t {
 	int id;
@@ -118,7 +118,7 @@ void UnLoadCallbk()
 }
 void PhantomWindow::Setup()
 {
-	SetPosition(350, 50);
+	SetPosition(500, 500);
 	SetSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 	SetTitle("");
 	RegisterTab(&RageBotTab);
@@ -142,9 +142,10 @@ void CRageBotTab::Setup()
 #pragma region Aimbot
 	AimbotGroup.SetPosition(10, 25);
 	AimbotGroup.SetText("Aimbot");
-	AimbotGroup.SetSize(650, 413);
+	AimbotGroup.SetSize(650, 460);
 	AimbotGroup.AddTab(CGroupTab("Main", 1));
 	AimbotGroup.AddTab(CGroupTab("Accuracy", 2));
+	AimbotGroup.AddTab(CGroupTab("Accuracy2", 3));
 	RegisterControl(&AimbotGroup);
 	AimbotEnable.SetFileId("aim_enable");
 	AimbotGroup.PlaceLabledControl(1, "Enable", this, &AimbotEnable);
@@ -212,7 +213,7 @@ void CRageBotTab::Setup()
 	BaimIfUnderXHealth.SetBoundaries(0, 100);
 	BaimIfUnderXHealth.extension = XorStr("HP");
 	BaimIfUnderXHealth.SetValue(0);
-	AimbotGroup.PlaceLabledControl(2, "Body Aim If HP Lower Than", this, &BaimIfUnderXHealth);
+	AimbotGroup.PlaceLabledControl(3, "Body Aim If HP Lower Than", this, &BaimIfUnderXHealth);
 	baim.SetFileId("tgt_bruteforce2");
 	baim.SetBoundaries(0.f, 15.f);
 	baim.extension = XorStr(" Shots");
@@ -220,14 +221,18 @@ void CRageBotTab::Setup()
 	AimbotGroup.PlaceLabledControl(2, "Body Aim After Shots", this, &baim);
 	OverrideKey.SetFileId("acc_overrridekey");
 	BaimInAir.SetFileId("BaimInAir");
-	AimbotGroup.PlaceLabledControl(2, "Baim In Air", this, &BaimInAir);
+	AimbotGroup.PlaceLabledControl(3, "Baim In Air", this, &BaimInAir);
 	BaimIfStanding.SetFileId("BaimIfStanding");
-	AimbotGroup.PlaceLabledControl(2, "Baim If Standing", this, &BaimIfStanding);
+	AimbotGroup.PlaceLabledControl(3, "Baim If Standing", this, &BaimIfStanding);
+	BaimIfFakeWalking.SetFileId("BaimIfFakeWalking");
+	AimbotGroup.PlaceLabledControl(3, "Baim If Fakewalking", this, &BaimIfFakeWalking);
 	AimbotGroup.PlaceLabledControl(2, "Override Key", this, &OverrideKey);
 	bigbaim.SetFileId("acc_bigbaim");
-	AimbotGroup.PlaceLabledControl(2, "Force Body Aim Key", this, &bigbaim);
+	AimbotGroup.PlaceLabledControl(3, "Force Body Aim Key", this, &bigbaim);
 	QuickStop.SetFileId("schnellerstop");
-	AimbotGroup.PlaceLabledControl(2, "Quickstop", this, &QuickStop);
+	AwpBaim.SetFileId("AwpBaim");
+	AimbotGroup.PlaceLabledControl(3, "Baim with awp", this, &AwpBaim);
+	AimbotGroup.PlaceLabledControl(3, "Quickstop", this, &QuickStop);
 	EnginePrediction.SetFileId("acc_engine_prediciton");
 	AimbotGroup.PlaceLabledControl(2, "Engine Prediction", this, &EnginePrediction);
 	pointscaleyes.SetFileId("godiefag");
