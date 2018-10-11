@@ -721,6 +721,8 @@ void ResolverSetup::Resolve(IClientEntity* pEntity, int CurrentTarget)
 					if (activity == -1)
 						continue;
 
+
+
 					if (sim - last_sim[i] >= 1)
 					{
 						if (sim - last_sim[i] == 1 && !IsAdjustingBalance(player, anime))

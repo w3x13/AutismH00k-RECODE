@@ -219,6 +219,8 @@ void CRageBotTab::Setup()
 	baim.SetValue(4.f);
 	AimbotGroup.PlaceLabledControl(2, "Body Aim After Shots", this, &baim);
 	OverrideKey.SetFileId("acc_overrridekey");
+	BaimInAir.SetFileId("BaimInAir");
+	AimbotGroup.PlaceLabledControl(2, "BaimInAir", this, &BaimInAir);
 	AimbotGroup.PlaceLabledControl(2, "Override Key", this, &OverrideKey);
 	bigbaim.SetFileId("acc_bigbaim");
 	AimbotGroup.PlaceLabledControl(2, "Force Body Aim Key", this, &bigbaim);

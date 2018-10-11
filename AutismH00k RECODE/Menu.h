@@ -29,6 +29,7 @@ public:
 	CSlider BaimIfUnderXHealth;
 	CSlider XShots;
 	CCheckBox EnginePrediction;
+	CCheckBox BaimInAir;
 	CCheckBox AimbotAimStep;
 	CCheckBox pointscaleyes;
 	CCheckBox Multienable;

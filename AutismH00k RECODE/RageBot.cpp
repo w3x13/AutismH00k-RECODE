@@ -1221,6 +1221,12 @@ int CRageBot::HitScan(IClientEntity* pEntity)
 				HitBoxesToScan.push_back((int)CSGOHitboxID::HITBOX_LEFT_FOREARM);
 				HitBoxesToScan.push_back((int)CSGOHitboxID::HITBOX_RIGHT_FOREARM);
 			}
+			else if (!pEntity->GetFlags() & FL_ONGROUND && Options::Menu.RageBotTab.BaimInAir.GetState()) {
+				HitBoxesToScan.push_back((int)CSGOHitboxID::HITBOX_BELLY);
+				HitBoxesToScan.push_back((int)CSGOHitboxID::HITBOX_PELVIS);
+				HitBoxesToScan.push_back((int)CSGOHitboxID::HITBOX_UPPER_CHEST);
+				HitBoxesToScan.push_back((int)CSGOHitboxID::HITBOX_UPPER_CHEST);
+			}
 			else if (GetAsyncKeyState(Options::Menu.RageBotTab.bigbaim.GetKey()) && !Options::Menu.m_bIsOpen)
 			{
 				HitBoxesToScan.push_back((int)CSGOHitboxID::HITBOX_BELLY);
