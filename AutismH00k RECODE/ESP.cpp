@@ -147,10 +147,6 @@ void CEsp::Draw()
 			{
 				DrawPlayer(pEntity, pinfo);
 			}
-			if (Options::Menu.VisualsTab.SpecList.GetState())
-			{
-				SpecList();
-			}
 			ClientClass* cClass = (ClientClass*)pEntity->GetClientClass();
 			if (Options::Menu.VisualsTab.FiltersNades.GetState() && strstr(cClass->m_pNetworkName, "Projectile"))
 			{
@@ -180,12 +176,14 @@ void CEsp::Draw()
 	{
 		ConVar* greymode = Interfaces::CVar->FindVar("r_showenvcubemap");
 
-		if (greymode)
+		if (greymode && Options::Menu.VisualsTab.GrayMode.GetState())
 		{
 			greymode->SetValue(1);
 		}
-		else
+		else if (!Options::Menu.VisualsTab.GrayMode.GetState())
 		{
+			Interfaces::Engine->ClientCmd_Unrestricted("r_showenvcubemap 0");
+			Interfaces::Engine->ClientCmd("r_showenvcubemap 0");
 			greymode->SetValue(0);
 		}
 	}
@@ -223,8 +221,21 @@ void CEsp::Draw()
 			*(int*)(smokecout) = 0;
 		}
 	}
+	typedef void(*RevealAllFn)(int);
+	RevealAllFn fnReveal;
+	void CEsp::Rank(CUserCmd *pCmd) {
+		if (!Options::Menu.VisualsTab.RANK.GetState())
+			return;
 
+		if (!fnReveal)
+			fnReveal = (RevealAllFn)Utilities::Memory::FindPattern(XorStr("client.dll"), (PBYTE)XorStr("\x55\x8B\xEC\x8B\x0D\x00\x00\x00\x00\x68\x00\x00\x00\x00"), XorStr("xxxxx????x????"));
 
+		int iBuffer[1];
+
+		if (pCmd->buttons & IN_SCORE)
+			fnReveal(iBuffer[1]);
+
+	}
 float damage;
 char bombdamagestringdead[24];
 char bombdamagestringalive[24];

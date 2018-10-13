@@ -44,6 +44,7 @@ private:
 
 	void FilledBox(CEsp::ESPBox size, Color color);
 	void DrawBoxx(Box size, Color color);
+	void Rank(CUserCmd *pCmd);
 	void DrawBoxx2(Box size, Color color);
 	bool get_box(IClientEntity * m_entity, Box & box, bool dynamic);
 	bool GetBox(IClientEntity* pEntity, ESPBox &result);

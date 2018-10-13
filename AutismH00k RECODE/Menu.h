@@ -241,6 +241,7 @@ public:
 	CCheckBox OptionsHelmet;
 	CCheckBox NightMode;
 	CCheckBox OptionsKit;
+	CCheckBox RANK;
 	CCheckBox SpecList;
 	CCheckBox IsScoped;
 	CCheckBox CompRank;

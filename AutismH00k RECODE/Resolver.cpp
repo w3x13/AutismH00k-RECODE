@@ -618,6 +618,7 @@ void ResolverSetup::Resolve(IClientEntity* pEntity, int CurrentTarget)
 			bool didsync[64] = { false };
 			bool spin[64] = { false };
 			bool moving[64] = { false };
+			const float height = 64;
 			bool hadmovingdif[64] = { false };
 			bool hadslowlby[64] = { false };
 			bool has_fake979[64] = { false };
