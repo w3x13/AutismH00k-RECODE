@@ -209,30 +209,6 @@ void CRageBotTab::Setup()
 	AccuracyMinimumDamage.SetValue(20);
 	AccuracyMinimumDamage.extension = XorStr("HP");
 	AimbotGroup.PlaceLabledControl(2, "Minimum Damage", this, &AccuracyMinimumDamage);
-	BaimIfUnderXHealth.SetFileId("acc_BaimIfUnderXHealth");
-	BaimIfUnderXHealth.SetBoundaries(0, 100);
-	BaimIfUnderXHealth.extension = XorStr("HP");
-	BaimIfUnderXHealth.SetValue(0);
-	AimbotGroup.PlaceLabledControl(3, "Body Aim If HP Lower Than", this, &BaimIfUnderXHealth);
-	baim.SetFileId("tgt_bruteforce2");
-	baim.SetBoundaries(0.f, 15.f);
-	baim.extension = XorStr(" Shots");
-	baim.SetValue(4.f);
-	AimbotGroup.PlaceLabledControl(2, "Body Aim After Shots", this, &baim);
-	OverrideKey.SetFileId("acc_overrridekey");
-	BaimInAir.SetFileId("BaimInAir");
-	AimbotGroup.PlaceLabledControl(3, "Baim In Air", this, &BaimInAir);
-	BaimIfStanding.SetFileId("BaimIfStanding");
-	AimbotGroup.PlaceLabledControl(3, "Baim If Standing", this, &BaimIfStanding);
-	BaimIfFakeWalking.SetFileId("BaimIfFakeWalking");
-	AimbotGroup.PlaceLabledControl(3, "Baim If Fakewalking", this, &BaimIfFakeWalking);
-	AimbotGroup.PlaceLabledControl(2, "Override Key", this, &OverrideKey);
-	bigbaim.SetFileId("acc_bigbaim");
-	AimbotGroup.PlaceLabledControl(3, "Force Body Aim Key", this, &bigbaim);
-	QuickStop.SetFileId("schnellerstop");
-	AwpBaim.SetFileId("AwpBaim");
-	AimbotGroup.PlaceLabledControl(3, "Baim with awp", this, &AwpBaim);
-	AimbotGroup.PlaceLabledControl(3, "Quickstop", this, &QuickStop);
 	EnginePrediction.SetFileId("acc_engine_prediciton");
 	AimbotGroup.PlaceLabledControl(2, "Engine Prediction", this, &EnginePrediction);
 	pointscaleyes.SetFileId("godiefag");
@@ -256,6 +232,32 @@ void CRageBotTab::Setup()
 	AimbotGroup.PlaceLabledControl(2, "Body", this, &Multival);
 	extrapolation.SetFileId("richnblind");
 	AimbotGroup.PlaceLabledControl(2, "Extrapolation", this, &extrapolation);
+	BaimIfUnderXHealth.SetFileId("acc_BaimIfUnderXHealth");
+	BaimIfUnderXHealth.SetBoundaries(0, 100);
+	BaimIfUnderXHealth.extension = XorStr("HP");
+	BaimIfUnderXHealth.SetValue(0);
+	AimbotGroup.PlaceLabledControl(3, "Body Aim If HP Lower Than", this, &BaimIfUnderXHealth);
+
+	baim.SetFileId("tgt_bruteforce2");
+	baim.SetBoundaries(0.f, 15.f);
+	baim.extension = XorStr(" Shots");
+	baim.SetValue(4.f);
+	AimbotGroup.PlaceLabledControl(3, "Body Aim After Shots", this, &baim);
+
+	OverrideKey.SetFileId("acc_overrridekey");
+	BaimInAir.SetFileId("BaimInAir");
+	AimbotGroup.PlaceLabledControl(3, "Baim In Air", this, &BaimInAir);
+	BaimIfStanding.SetFileId("BaimIfStanding");
+	AimbotGroup.PlaceLabledControl(3, "Baim If Standing", this, &BaimIfStanding);
+	BaimIfFakeWalking.SetFileId("BaimIfFakeWalking");
+	AimbotGroup.PlaceLabledControl(3, "Baim If Fakewalking", this, &BaimIfFakeWalking);
+	AimbotGroup.PlaceLabledControl(3, "Override Key", this, &OverrideKey);
+	bigbaim.SetFileId("acc_bigbaim");
+	AimbotGroup.PlaceLabledControl(3, "Force Body Aim Key", this, &bigbaim);
+	QuickStop.SetFileId("schnellerstop");
+	AwpBaim.SetFileId("AwpBaim");
+	AimbotGroup.PlaceLabledControl(3, "Baim with awp", this, &AwpBaim);
+	AimbotGroup.PlaceLabledControl(3, "Quickstop", this, &QuickStop);
 	/*----------------------------------------------------------------------
 	--------------------------------------------------*/
 #pragma endregion  AntiAim controls get setup in here
@@ -593,6 +595,8 @@ void CVisualTab::Setup()
 	ChamsGroup.PlaceLabledControl(0, "LBYIndicator", this, &LBYIndicator);
 	LCIndicator.SetFileId("LCIndicator");
 	ChamsGroup.PlaceLabledControl(0, "LCIndicator", this, &LCIndicator);
+	GrayMode.SetFileId("GrayMode");
+	ChamsGroup.PlaceLabledControl(0, "Chrome Mode", this, &GrayMode);
 	
 
 #pragma region Other

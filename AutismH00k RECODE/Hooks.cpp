@@ -1609,10 +1609,32 @@ bool __fastcall Hooked_FireEventClientSide(PVOID ECX, PVOID EDX, IGameEvent *Eve
 
 			}
 		}
+		int nUserID = Event->GetInt("attacker");
+		int nDead = Event->GetInt("userid");
+		if (nUserID || nDead) {
 
+		
+		player_info_t killed_info = GetInfo(Interfaces::Engine->GetPlayerForUserID(nDead));
+		player_info_t killer_info = GetInfo(Interfaces::Engine->GetPlayerForUserID(nUserID));
+		IClientEntity* hurt = (IClientEntity*)Interfaces::EntList->GetClientEntity(Interfaces::Engine->GetPlayerForUserID(Event->GetInt("userid")));
+		C_BaseCombatWeapon* pWeapon = localplayer->GetWeapon2();
+		if (!strcmp(Event->GetName(), "weapon_fire") == 0 & pWeapon->GetSpread() > 0.5)
+		{
+			Interfaces::CVar->ConsoleColorPrintf(Color(255, 255, 255, 255), "");
+			std::string missed = "Missed ";
+			std::string Two = killed_info.name;
+			std::string homo = " Due to spread";
+			if (Options::Menu.VisualsTab.logs.GetState())
+			{
+				std::string XD = missed + Two + homo;
+				std::string uremam = XD;
+				Msg(uremam.c_str());
+			}
+			
+		}
+		}
 
-
-		if (!strcmp(Event->GetName(), "item_purchase"))
+		
 		{
 			Interfaces::Engine->ExecuteClientCmd("clear");
 			int nUserID = Event->GetInt("attacker");

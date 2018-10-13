@@ -176,6 +176,19 @@ void CEsp::Draw()
 		DWORD m_flFlashMaxAlpha = NetVar.GetNetVar(0xFE79FB98);
 		*(float*)((DWORD)pLocal + m_flFlashMaxAlpha) = alp;
 	}
+	if (Options::Menu.VisualsTab.GrayMode.GetState())
+	{
+		ConVar* greymode = Interfaces::CVar->FindVar("r_showenvcubemap");
+
+		if (greymode)
+		{
+			greymode->SetValue(1);
+		}
+		else
+		{
+			greymode->SetValue(0);
+		}
+	}
 	if (Options::Menu.VisualsTab.FovArrows.GetState())
 	{
 

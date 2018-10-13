@@ -318,6 +318,8 @@ void CMiscHacks::AutoPistol(CUserCmd* pCmd) {
 
 	WasFiring = pCmd->buttons & IN_ATTACK ? true : false;
 }
+
+
 void CMiscHacks::SlowMo(CUserCmd *pCmd, bool &bSendPacket)
 {
 	IClientEntity* pLocal = hackManager.pLocal();

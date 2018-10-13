@@ -297,6 +297,7 @@ public:
 	CCheckBox OtherNoSky;
 	CCheckBox OtherNoFlash;
 	CCheckBox OtherNoSmoke;
+	CCheckBox GrayMode;
 	CCheckBox Wireframesmoke;
 	CCheckBox OtherAsusWalls;
 	CCheckBox FovArrows;
@@ -420,6 +421,7 @@ public:
 	CCheckBox meme;
 	CCheckBox OtherAutoStrafe;
 	CComboBoxYeti OtherSafeMode;
+	CCheckBox Clantag;
 	CComboBoxYeti freestandtype;
 	CKeyBind OtherCircleButton;
 	CCheckBox AutoDefuse;
